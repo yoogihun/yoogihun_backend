@@ -75,7 +75,7 @@ public class TransactionServiceImpl implements TransactionService {
         BigDecimal fee = command.amount().multiply(BigDecimal.valueOf(0.01));
         //계좌에서 금액+수수료 만큼 차감
         accountService.withdraw(new WithdrawCommand(command.fromAccountNumber(), command.amount().add(fee), true));
-        BigDecimal afterBalance = fromAccount.getBalance();
+        BigDecimal afterBalance = beforeBalance.subtract(command.amount().add(fee));
 
         //목표 계좌에 금액만큼 입금
         accountService.deposit(new DepositCommand(command.toAccountNumber(), command.amount(), true));

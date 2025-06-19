@@ -1,17 +1,11 @@
 package com.ygh.infra.persistence.account;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ygh.account.domain.account.entity.Account;
 import com.ygh.account.domain.account.repository.AccountRepository;
-import com.ygh.common.enums.TransactionType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Optional;
-
-import static com.ygh.transaction.domain.account.entity.QAccountTransaction.accountTransaction;
 
 @Repository
 @RequiredArgsConstructor

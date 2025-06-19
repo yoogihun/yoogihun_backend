@@ -4,7 +4,6 @@ import com.ygh.account.domain.account.command.DepositCommand;
 import com.ygh.account.domain.account.command.RegisterAccountCommand;
 import com.ygh.account.domain.account.command.TransferCommand;
 import com.ygh.account.domain.account.entity.Account;
-import com.ygh.account.domain.account.exception.AccountException;
 import com.ygh.account.domain.account.repository.AccountRepository;
 import com.ygh.account.domain.account.service.AccountService;
 import com.ygh.common.response.PaginatedResponse;
@@ -12,7 +11,6 @@ import com.ygh.transaction.domain.account.command.TransactionHistoryCommand;
 import com.ygh.transaction.domain.account.dto.TransactionHistoryDto;
 import com.ygh.transaction.domain.account.exception.TransactionException;
 import com.ygh.transaction.domain.account.service.TransactionService;
-import com.ygh.transaction.domain.account.service.TransactionServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,13 +39,11 @@ class TransactionIntegrationTest {
         BigDecimal fromBalance = BigDecimal.valueOf(4_000_000);
         BigDecimal transferAmount = BigDecimal.valueOf(1_000_000);
         // 계좌 등록
-        String fromId = accountService.registerAccount(new RegisterAccountCommand("이순신", "하나은행"));
-        String toId = accountService.registerAccount(new RegisterAccountCommand("김철수", "우리은행"));
+        String fromAccountNum = accountService.registerAccount(new RegisterAccountCommand("이순신", "하나은행"));
+        String toAccountNum = accountService.registerAccount(new RegisterAccountCommand("김철수", "우리은행"));
 
-        Account from = accountRepository.findById(fromId)
-                .orElseThrow(() -> new AssertionError("Account not found."));
-        Account to = accountRepository.findById(toId)
-                .orElseThrow(() -> new AssertionError("Account not found."));
+        Account from = accountService.getAccountByNumber(fromAccountNum);
+        Account to = accountService.getAccountByNumber(toAccountNum);
 
         // 초기 입금
         accountService.deposit(new DepositCommand(from.getAccountNumber(), fromBalance, false));
@@ -78,10 +74,9 @@ class TransactionIntegrationTest {
 
     @Test
     void 거래_내역_최신순_조회() {
-        String accountId = accountService.registerAccount(new RegisterAccountCommand("박영희", "하나은행"));
+        String accountNumber = accountService.registerAccount(new RegisterAccountCommand("박영희", "하나은행"));
 
-        Account account = accountRepository.findById(accountId)
-                .orElseThrow(() -> new AssertionError("Account not found."));
+        Account account = accountService.getAccountByNumber(accountNumber);
 
         accountService.deposit(new DepositCommand(account.getAccountNumber(), new BigDecimal(5000), false));
         accountService.deposit(new DepositCommand(account.getAccountNumber(), new BigDecimal(10000), false));

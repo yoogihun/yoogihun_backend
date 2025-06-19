@@ -1,10 +1,7 @@
 package com.ygh.transaction.domain.account.service;
 
-import com.ygh.account.domain.account.command.RegisterAccountCommand;
 import com.ygh.account.domain.account.command.TransferCommand;
-import com.ygh.account.domain.account.dto.TransactionResponse;
 import com.ygh.account.domain.account.entity.Account;
-import com.ygh.account.domain.account.repository.AccountRepository;
 import com.ygh.account.domain.account.service.AccountService;
 import com.ygh.common.enums.TransactionType;
 import com.ygh.common.event.TransactionRecordedEvent;
@@ -12,12 +9,10 @@ import com.ygh.common.response.PaginatedResponse;
 import com.ygh.transaction.domain.account.command.TransactionHistoryCommand;
 import com.ygh.transaction.domain.account.dto.TransactionHistoryDto;
 import com.ygh.transaction.domain.account.entity.AccountTransaction;
-import com.ygh.transaction.domain.account.exception.TransactionErrorCode;
 import com.ygh.transaction.domain.account.exception.TransactionException;
 import com.ygh.transaction.domain.account.repository.TransactionRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.Extensions;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -29,12 +24,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;

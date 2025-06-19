@@ -46,8 +46,8 @@ public class AccountServiceImpl implements AccountService {
                 .balance(BigDecimal.ZERO)
                 .build();
         Account saveAccount = accountRepository.save(account);
-        //생성 완료된 계좌 ID 반환
-        return saveAccount.getId();
+        //생성 완료된 계좌 번호 반환
+        return saveAccount.getAccountNumber();
     }
 
     /**

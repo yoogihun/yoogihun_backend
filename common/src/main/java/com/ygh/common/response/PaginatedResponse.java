@@ -1,6 +1,5 @@
 package com.ygh.common.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 

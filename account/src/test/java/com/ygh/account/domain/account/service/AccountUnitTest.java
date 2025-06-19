@@ -10,13 +10,11 @@ import com.ygh.account.domain.account.exception.AccountErrorCode;
 import com.ygh.account.domain.account.exception.AccountException;
 import com.ygh.account.domain.account.repository.AccountRepository;
 import com.ygh.common.event.TransactionRecordedEvent;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
 
@@ -56,9 +54,9 @@ class AccountUnitTest {
 
         when(accountRepository.save(any(Account.class))).thenReturn(savedAccount);
 
-        String accountId = accountService.registerAccount(command);
+        String accountNumber = accountService.registerAccount(command);
 
-        assertThat(accountId).isEqualTo("abc123");
+        assertThat(accountNumber).isEqualTo("1234567890");
         verify(accountRepository, times(1)).save(any(Account.class));
     }
 
