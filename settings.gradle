@@ -1,0 +1,6 @@
+rootProject.name = 'yoogihun_backend'
+include 'account'
+include 'transaction'
+include 'common'
+include 'api'
+include 'infra'
