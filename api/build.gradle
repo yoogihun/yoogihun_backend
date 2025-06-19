@@ -1,0 +1,18 @@
+//user build.gradle
+dependencies {
+    //common 모듈 참조
+    implementation project(':infra')
+    implementation project(':common')
+    implementation project(':account')
+    implementation project(':transaction')
+
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+}
+
+bootJar {
+    enabled = true
+}
+
+jar {
+    enabled = false
+}

@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+    mysql:
+        image: mysql:8.0
+        container_name: mysql_db
+        environment:
+            MYSQL_ROOT_PASSWORD: rootpassword
+        ports:
+            - "3307:3306"
+        volumes:
+            - ./mysql-init:/docker-entrypoint-initdb.d
+        healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            interval: 10s
+            retries: 5
+
+    api:
+        image: openjdk:17-jdk
+        container_name: api_service
+        depends_on:
+            - mysql
+        volumes:
+            - ./api/build/libs/api.jar:/app/api.jar
+        command: ["java", "-jar", "/app/api.jar"]
+        environment:
+            SPRING_DATASOURCE_ACCOUNT_URL: jdbc:mysql://mysql:3306/account_db
+            SPRING_DATASOURCE_ACCOUNT_USERNAME: root
+            SPRING_DATASOURCE_ACCOUNT_PASSWORD: rootpassword
+            SPRING_DATASOURCE_TRANSACTION_URL: jdbc:mysql://mysql:3306/transaction_db
+            SPRING_DATASOURCE_TRANSACTION_USERNAME: root
+            SPRING_DATASOURCE_TRANSACTION_PASSWORD: rootpassword
+            SPRING_JPA_HIBERNATE_DDL_AUTO: update
+        ports:
+            - "8080:8080"

@@ -1,0 +1,44 @@
+logging:
+    level:
+        root: info
+        org.hibernate.orm.jdbc.bind: info
+
+spring:
+    application:
+        name: service-api
+    datasource:
+        account:
+            url: jdbc:mysql://localhost:3307/account_db?useUnicode=yes&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=utf8&allowPublicKeyRetrieval=true
+            username: root
+            password: rootpassword
+            driver-class-name: com.mysql.cj.jdbc.Driver
+        transaction:
+            url: jdbc:mysql://localhost:3307/transaction_db?useUnicode=yes&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=utf8&allowPublicKeyRetrieval=true
+            username: root
+            password: rootpassword
+            driver-class-name: com.mysql.cj.jdbc.Driver
+
+    jpa:
+        database: mysql
+        database-platform: org.hibernate.dialect.MySQL8Dialect
+        show-sql: true
+        open-in-view: false
+        properties:
+            hibernate:
+                format_sql: true
+                default_batch_fetch_size: 1000
+                query:
+                    plan_cache_max_size: 500
+                    plan_parameter_metadata_max_size: 32
+
+account:
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+
+transaction:
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
